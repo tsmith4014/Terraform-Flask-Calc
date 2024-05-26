@@ -4,16 +4,51 @@ This guide details the steps to deploy a Flask calculator application on AWS EC2
 
 ![Terraform Deployment of Flask Calculator Project](terraform_deployment_of_flask_calculator_project.png)
 
-### Prerequisites
+## Prerequisites
 
 - AWS account with appropriate permissions
-- Terraform installed on your local machine
 - An existing key pair for SSH access to EC2 instances
 - Basic knowledge of AWS and Terraform
 
 ### Step-by-Step Guide
 
-#### Step 1: Set Up the Terraform Configuration
+#### Step 1: Install Terraform
+
+1. **Download Terraform:**
+
+   Visit the [Terraform download page](https://www.terraform.io/downloads.html) and download the appropriate package for your operating system.
+
+2. **Install Terraform:**
+
+   - **On macOS:**
+
+     ```bash
+     brew tap hashicorp/tap
+     brew install hashicorp/tap/terraform
+     ```
+
+   - **On Linux:**
+
+     ```bash
+     sudo apt-get update && sudo apt-get install -y gnupg software-properties-common curl
+     curl -fsSL https://apt.releases.hashicorp.com/gpg | sudo apt-key add -
+     sudo apt-add-repository "deb [arch=amd64] https://apt.releases.hashicorp.com $(lsb_release -cs) main"
+     sudo apt-get update && sudo apt-get install terraform
+     ```
+
+   - **On Windows:**
+
+     Download the Windows zip file from the Terraform download page and extract it to a directory. Add the directory to your system's PATH environment variable.
+
+3. **Verify the installation:**
+
+   ```bash
+   terraform -v
+   ```
+
+   You should see the Terraform version printed out.
+
+#### Step 2: Set Up the Terraform Configuration
 
 1. **Create a new directory for your Terraform files:**
 
@@ -22,7 +57,7 @@ This guide details the steps to deploy a Flask calculator application on AWS EC2
    cd terraform-flask-app
    ```
 
-2. **Create a `main.tf` file with the following content:**
+2. **Create a `main.tf` file with the following content, however this will depend on your specfic aws creds:**
 
    ```hcl
    provider "aws" {
@@ -149,7 +184,7 @@ This guide details the steps to deploy a Flask calculator application on AWS EC2
    }
    ```
 
-#### Step 2: Initialize and Apply the Terraform Configuration
+#### Step 3: Initialize and Apply the Terraform Configuration
 
 1. **Initialize Terraform:**
 
@@ -165,7 +200,7 @@ This guide details the steps to deploy a Flask calculator application on AWS EC2
 
    This will create the necessary AWS resources, including EC2 instances, security groups, load balancer, and target groups, and deploy the Flask application.
 
-#### Step 3: Verify the Deployment
+#### Step 4: Verify the Deployment
 
 1. **Get the DNS name of the load balancer:**
 
@@ -175,7 +210,7 @@ This guide details the steps to deploy a Flask calculator application on AWS EC2
 
    Open a web browser and navigate to the load balancer DNS name. You should see the Flask calculator application running.
 
-#### Step 4: Verify High Availability
+#### Step 5: Verify High Availability
 
 1. **Shut down one of the EC2 instances:**
 
